@@ -275,10 +275,10 @@ local response = http.get(host, port, uri, options)
      -- error handling
      if ( title == nil ) then
        print("|")
-       print("|  STATUS: AXIS WEBCAM FOUND")
-       print("|    TITLE: website doesn't have a title?")
-       print("|      WEBCAM ACCESS: http://"..host.ip..":"..port.number..uri.." ?")
-       print("|      Module Author: r00t-3xp10it & Cleiton Pinheiro")
+       print("|  STATUS: AXIS MATCHING URL FOUND")
+       print("|    TITLE: webpage doesn't have a title?")
+       print("|      URL ACCESS: http://"..host.ip..":"..port.number..uri.." ?")
+       print("|        Module Author: r00t-3xp10it & Cleiton Pinheiro")
        print("|_\n")
        do return end
      end
@@ -292,7 +292,7 @@ local response = http.get(host, port, uri, options)
         else
            f = f+1
            if (f == 68) then   --> uri found - but failed to retrieve version-vendor from <title> matching (tbl) table
-             print("|\n|   STATUS: AXIS WEBCAM FOUND\n|     TITLE: fail to retrieve webcam version-vendor from <title>\n|       WEBCAM ACCESS: http://"..host.ip..":"..port.number..uri.."\n|         Module Author: r00t-3xp10it & Cleiton Pinheiro\n|_\n")
+             print("|\n|   STATUS: AXIS MATCHING URL FOUND\n|     TITLE: fail to retrieve webcam version-vendor from <title>\n|       URL ACCESS: http://"..host.ip..":"..port.number..uri.."\n|         Module Author: r00t-3xp10it & Cleiton Pinheiro\n|_\n")
              return
            end
         end
