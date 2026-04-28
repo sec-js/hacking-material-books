@@ -70,31 +70,38 @@ uri = stdnse.get_script_args(SCRIPT_NAME..".uri") or "/indexFrame.shtml"
 -- Check User Input uri response
 local check_uri = http.get(host, port, uri)
 if ( check_uri.status == 401 ) then
-print("|    ["..check_uri.status.."] => http://"..host.ip..":"..port.number..uri.." (AUTH LOGIN FOUND)")
+  print("|    ["..check_uri.status.."] => http://"..host.ip..":"..port.number..uri.." (AUTH LOGIN FOUND)")
+  print("|")
+  print("|  STATUS: AXIS WEBCAM FOUND")
+  print("|    WEBCAM ACCESS: http://"..host.ip..":"..port.number..uri.." [LOGIN]")
+  print("|      ABORT SCANS: webcam access require authentication login")
+  print("|        Module Author: r00t-3xp10it & Cleiton Pinheiro")
+  print("|_\n")
 elseif ( check_uri.status == 404 ) then
-print("|    ["..check_uri.status.."] "..host.ip..":"..port.number.." => "..uri)
+  print("|    ["..check_uri.status.."] "..host.ip..":"..port.number.." => "..uri)
 
-uril = {"/webcam_code.php", "/view/view.shtml", "/indexFrame.shtml", "/view/index.shtml", "/view/index2.shtml", "/webcam/view.shtml", "/ViewerFrame.shtml", "/RecordFrame?Mode=", "/MultiCameraFrame?Mode=", "/view/viewer_index.shtml", "/visitor_center/i-cam.html", "/index.shtml", "/stadscam/Live95j.asp", "/sub06/cam.php", "/CgiStart"}
+  uril = {"/webcam_code.php", "/view/view.shtml", "/indexFrame.shtml", "/view/index.shtml", "/view/index2.shtml", "/webcam/view.shtml", "/ViewerFrame.shtml", "/RecordFrame?Mode=", "/MultiCameraFrame?Mode=", "/view/viewer_index.shtml", "/visitor_center/i-cam.html", "/index.shtml", "/stadscam/Live95j.asp", "/sub06/cam.php", "/CgiStart"}
 
-   -- loop Through {table} of uri url's
-   for i, intable in pairs(uril) do
-      local res = http.get(host, port, intable)
-      if ( res.status == 200 ) then
-         print("|    ["..res.status.."] "..host.ip..":"..port.number.." => "..intable)
-         uri = intable
-         break
-      else
-        limmit = limmit+1
-        print("|    ["..res.status.."] "..host.ip..":"..port.number.." => "..intable)
-         if ( limmit == 15 ) then --> why 15? Because its the number of URI links present in the {table} list.
-            print("|")
-            print("|  STATUS: NONE AXIS WEBCAM FOUND")
-            print("|    REASON: none uri match found in AXISwebcam DB")
-            print("|_     Module Author: r00t-3xp10it & Cleiton Pinheiro\n")
-            return 
-         end
-      end
-   end
+  -- loop Through {table} of uri url's
+  for i, intable in pairs(uril) do
+     local res = http.get(host, port, intable)
+     if ( res.status == 200 ) then
+        print("|    ["..res.status.."] "..host.ip..":"..port.number.." => "..uri)
+        uri = intable
+        break
+     else
+       limmit = limmit+1
+       print("|    ["..res.status.."] "..host.ip..":"..port.number.." => "..uri)
+        if ( limmit == 15 ) then --> why 15? Because its the number of URI links present in the {table} list.
+           print("|")
+           print("|  STATUS: NONE AXIS WEBCAM FOUND")
+           print("|    REASON: none uri match found in AXISwebcam DB")
+           print("|      Module Author: r00t-3xp10it & Cleiton Pinheiro")
+           print("|_\n")
+           return 
+       end
+     end
+  end
 
 -- Diferent error codes (mosquito needs this seting)
 elseif ( check_uri.status == 400 or check_uri.status == 403 or check_uri.status == 405 or check_uri.status == 500 or check_uri.status == 502 or check_uri.status == 503 or check_uri.status == 307 or check_uri.status == 302 or check_uri.status == 301 or check_uri.status == nil ) then
