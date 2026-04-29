@@ -1,5 +1,5 @@
 ---
--- Nmap NSE AXISwebcam-enum.nse - Version 1.12
+-- Nmap NSE AXISwebcam-enum.nse - Version 1.13
 -- [linux:admin] Copy to: /usr/share/nmap/scripts/AXISwebcam-enum.nse
 -- [linux:admin] Update NSE database: sudo nmap --script-updatedb
 -- [windows:admin] copy to: C:\Program Files (x86)\nmap\scripts\AXISwebcam-enum.nse
@@ -18,22 +18,24 @@ this script tests a List of AXIS default [/url's] available in our database to b
 
 Some Syntax examples:
 nmap --script-help AXISwebcam-enum.nse
-nmap -sS -T4 222.155.98.15 -p 80-86,8080-8082 --open --script AXISwebcam-enum
+nmap -sS -T4 222.155.98.15 -p 8081 --open --script AXISwebcam-enum
+nmap -sV -T3 183.95.71.129 -p 8081 --open --script AXISwebcam-enum 
 nmap -sS -T4 192.46.209.62 -p 8082 --script AXISwebcam-enum --script-args agent="Mozilla/5.0 (compatible; EvilMonkey)"
-nmap -sS -T4 193.93.22.133 -p 8080-8082 --open --script AXISwebcam-enum --script-args agent="Mozilla/5.0 (compatible),uri=/fd"
-nmap -sS -T4 161.81.122.107 -p 8080-8082 --open --script AXISwebcam-enum --script-args uri="/CgiStart/another-index-name.shtml"
-nmap -sS -v -T5 -iR 800 -p 8080-8086 --open --script AXISwebcam-enum -D 4.207.247.138,52.123.131.14
+nmap -sS -T4 193.93.22.133 -p 8080 --open --script AXISwebcam-enum --script-args agent="Mozilla/5.0 (compatible),uri=/fd"
+nmap -sS -T3 161.81.122.107 -p 8080-8082 --open --script AXISwebcam-enum --script-args uri="/CgiStart/another-index-name.shtml"
+nmap -sS -v -T5 -iR 800 -p 8080-8082 --open --script AXISwebcam-enum -D 4.207.247.138,52.123.131.14
 
 ]]
 
 ---
 -- @usage
 -- nmap --script-help AXISwebcam-enum.nse
--- nnmap -sS -T4 222.155.98.15 -p 80-86,8080-8082 --open --script AXISwebcam-enum
+-- nmap -sS -T4 222.155.98.15 -p 8081 --open --script AXISwebcam-enum
+-- nmap -sV -T3 183.95.71.129 -p 8081 --open --script AXISwebcam-enum 
 -- nmap -sS -T4 192.46.209.62 -p 8082 --script AXISwebcam-enum --script-args agent="Mozilla/5.0 (compatible; EvilMonkey)"
--- nmap -sS -T4 193.93.22.133 -p 8080-8082 --open --script AXISwebcam-enum --script-args agent="Mozilla/5.0 (compatible),uri=/fd"
--- nmap -sS -T4 161.81.122.107 -p 8080-8082 --open --script AXISwebcam-enum --script-args uri="/CgiStart/another-index-name.shtml"
--- nmap -sS -v -T5 -iR 800 -p 8080-8086 --open --script AXISwebcam-enum -D 4.207.247.138,52.123.131.14
+-- nmap -sS -T4 193.93.22.133 -p 8080 --open --script AXISwebcam-enum --script-args agent="Mozilla/5.0 (compatible),uri=/fd"
+-- nmap -sS -T3 161.81.122.107 -p 8080-8082 --open --script AXISwebcam-enum --script-args uri="/CgiStart/another-index-name.shtml"
+-- nmap -sS -v -T5 -iR 800 -p 8080-8082 --open --script AXISwebcam-enum -D 4.207.247.138,52.123.131.14
 -- @output
 -- PORT     STATE SERVICE VERSION
 -- 8080/tcp open  http    Boa httpd
@@ -76,7 +78,7 @@ if ( check_uri.status == 401 ) then   --> uri auth login found
   print("|")
   print("|  STATUS: AXIS WEBCAM FOUND")
   print("|    WEBCAM ACCESS: http://"..host.ip..":"..port.number..uri.." [LOGIN]")
-  print("|      ABORT SCANS: webcam access require authentication login")
+  print("|      ABORT SCANS: webcam access requires authentication login")
   print("|        Module Author: r00t-3xp10it & Cleiton Pinheiro")
   print("|_\n")
   return
@@ -99,8 +101,8 @@ elseif ( check_uri.status == 404 ) then --> uri not found
            print("|")
            print("|  STATUS: NONE AXIS WEBCAM FOUND")
            print("|    REASON: none uri match found in AXISwebcam DB")
-           print("|    HELPME: nmap --script AXISwebcam-enum --script-args uri='/another/index-name.shtml'")
-           print("|      Module Author: r00t-3xp10it & Cleiton Pinheiro")
+           print("|      HELP: nmap --script AXISwebcam-enum --script-args uri='/another/index-name.shtml'")
+           print("|        Module Author: r00t-3xp10it & Cleiton Pinheiro")
            print("|_\n")
            return
        end
@@ -276,7 +278,7 @@ local response = http.get(host, port, uri, options)
      if ( title == nil ) then
        print("|")
        print("|  STATUS: AXIS MATCHING URL FOUND")
-       print("|    TITLE: webpage doesn't have a title?")
+       print("|    TITLE: webpage doesn't have a <title> [response:nil]")
        print("|      URL ACCESS: http://"..host.ip..":"..port.number..uri.." ?")
        print("|        Module Author: r00t-3xp10it & Cleiton Pinheiro")
        print("|_\n")
@@ -286,14 +288,14 @@ local response = http.get(host, port, uri, options)
      -- Loop Through {table} of HTTP TITLE tags
      for i, intable in pairs(tbl) do
        local validar = string.match(title, intable)
-       if ( validar ~= nil or title == intable ) then  --> uri found + version-vendor retrieved from <title>
-           print("|\n|   STATUS: AXIS WEBCAM FOUND\n|     TITLE: "..intable.."\n|       WEBCAM ACCESS: http://"..host.ip..":"..port.number..uri.."\n|      Module Author: r00t-3xp10it & Cleiton Pinheiro\n|_\n")
+       if ( validar ~= nil or title == intable ) then     --> uri found + version-vendor retrieved from <title>
+           print("|\n|   STATUS: AXIS WEBCAM FOUND\n|     TITLE: "..intable.."\n|       WEBCAM ACCESS: http://"..host.ip..":"..port.number..uri.."\n|         Module Author: r00t-3xp10it & Cleiton Pinheiro\n|_\n")
            break
         else
            f = f+1
-           if (f == 68) then   --> uri found - but failed to retrieve version-vendor from <title> matching (tbl) table
-             print("|\n|   STATUS: AXIS MATCHING URL FOUND\n|     TITLE: fail to retrieve webcam version-vendor from <title>\n|       URL ACCESS: http://"..host.ip..":"..port.number..uri.."\n|         Module Author: r00t-3xp10it & Cleiton Pinheiro\n|_\n")
-             return
+           if (f == 68) then   --> uri found - but failed to match version-vendor from <title>
+             print("|\n|   STATUS: AXIS MATCHING URL FOUND\n|     TITLE: fail to extract webcam version-vendor from <title>\n|       URL ACCESS: http://"..host.ip..":"..port.number..uri.."\n|         Module Author: r00t-3xp10it & Cleiton Pinheiro\n|_\n")
+             do return end
            end
         end
      end
