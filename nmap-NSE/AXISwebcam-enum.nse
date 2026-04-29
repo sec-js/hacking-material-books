@@ -16,7 +16,13 @@ and also allow is users to input a diferent uri= [/url] link to be scan, IF none
 this script tests a List of AXIS default [/url's] available in our database to brute force the HTML TITLE tag
 Remark: This nse script does not brute force any authentication login of webcams found (just for enumeration)
 
-Some Syntax examples:
+Install
+[linux:admin] Copy to: /usr/share/nmap/scripts/AXISwebcam-enum.nse
+[linux:admin] Update NSE database: sudo nmap --script-updatedb
+[windows:admin] copy to: C:\Program Files (x86)\nmap\scripts\AXISwebcam-enum.nse
+[windows:admin] Update NSE database: nmap --script-updatedb
+
+Syntax examples
 nmap --script-help AXISwebcam-enum.nse
 nmap -sS -T4 222.155.98.15 -p 8081 --open --script AXISwebcam-enum
 nmap -sV -T3 183.95.71.129 -p 8081 --open --script AXISwebcam-enum 
@@ -24,6 +30,19 @@ nmap -sS -T4 192.46.209.62 -p 8082 --script AXISwebcam-enum --script-args agent=
 nmap -sS -T4 193.93.22.133 -p 8080 --open --script AXISwebcam-enum --script-args agent="Mozilla/5.0 (compatible),uri=/fd"
 nmap -sS -T3 161.81.122.107 -p 8080-8082 --open --script AXISwebcam-enum --script-args uri="/CgiStart/another-index-name.shtml"
 nmap -sS -v -T5 -iR 800 -p 8080-8082 --open --script AXISwebcam-enum -D 4.207.247.138,52.123.131.14
+
+Outputs
+|AXISwebcam-enum:
+|  Brute force AXIS network camera URL:
+|    [404] 216.99.115.136:8080 => /webcam_code.php
+|    [404] 216.99.115.136:8080 => /webcam/view.shtml
+|    [200] 216.99.115.136:8080 => /view/index.shtml
+|
+|  STATUS: AXIS WEBCAM FOUND
+|    TITLE: Live view  - AXIS 211 Network Camera version 4.11
+|      WEBCAM ACCESS: http://216.99.115.136:8080/view/index.shtml
+|        Module Author: r00t-3xp10it & Cleiton Pinheiro
+|_
 
 ]]
 
