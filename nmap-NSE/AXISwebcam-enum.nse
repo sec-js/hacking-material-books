@@ -4,7 +4,13 @@
 -- [linux:admin] Update NSE database: sudo nmap --script-updatedb
 -- [windows:admin] copy to: C:\Program Files (x86)\nmap\scripts\AXISwebcam-enum.nse
 -- [windows:admin] Update NSE database: nmap --script-updatedb
--- execute: nmap --script-help AXISwebcam-enum.nse
+-- Help: nmap --script-help AXISwebcam-enum.nse
+--
+-- Version 1.15 update:
+-- [1] @args.logfile="C:\Users\Nmap_scan.txt" --> creates or appends scan data to existing logfile.txt
+-- [2] URI's added: /img/video.asf, /axis-cgi/mjpg/video.cgi, /axis-media/media.amp, /axis-cgi/media.cgi
+-- [3] stdnse.sleep(1.5) --> added sleep() xx seconds function to AXISwebcam-enum sourcecode
+-- [4] res.status == nil --> webserver stop responding to our probes after a while: fixed
 ---
 
 description = [[
@@ -37,11 +43,6 @@ Outputs
 |      WEBCAM ACCESS: http://216.99.115.136:8080/view/index.shtml
 |        Module Author: r00t-3xp10it & Cleiton Pinheiro
 |_
-
-Version 1.15 update:
-[1] @args.logfile="C:\Users\Nmap_scan.txt" --> creates or appends scan data to existing logfile.txt
-[2] URI's added: /img/video.asf, /axis-cgi/mjpg/video.cgi, /axis-media/media.amp, /axis-cgi/media.cgi
-[3] stdnse.sleep(1.5) --> added sleep() xx seconds function to AXISwebcam-enum sourcecode
 
 ]]
 
@@ -136,7 +137,6 @@ action = function(host, port)
                 break
             else
                 limmit = limmit+1
-
                 if ( res.status == nil ) then
                     print("|    [NIL] "..host.ip..":"..port.number.." => [connection failed]")
                     print("|")
@@ -190,7 +190,7 @@ action = function(host, port)
             end
         end
 
-        -- diferent Http response codes
+    -- diferent Http response codes
     elseif ( check_uri.status == nil ) then
         print("|    [NIL] "..host.ip..":"..port.number.." => [socket error]")
         print("|")
