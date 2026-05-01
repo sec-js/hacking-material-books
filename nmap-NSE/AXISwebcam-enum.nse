@@ -30,7 +30,7 @@ Remark: 'This nse script does not brute force any authentication login of webcam
 Syntax examples
 nmap --script-help AXISwebcam-enum.nse
 nmap -sS -T4 222.155.98.15 -p 8081 --open --script AXISwebcam-enum
-nmap -sV -T3 183.95.71.129 -p 8081 --open --script AXISwebcam-enum --script-args logfile="C:\Users\Nmap_scan.txt"
+nmap -sS -T3 183.95.71.129 -p 8081 --open --script AXISwebcam-enum --script-args logfile="$pwd\Nmap_scan.txt"
 nmap -sS -T4 192.46.209.62 -p 8082 --script AXISwebcam-enum --script-args agent="Mozilla/5.0 (compatible; EvilMonkey)"
 nmap -sS -T4 193.93.22.133 -p 8080 --open --script AXISwebcam-enum --script-args agent="Mozilla/5.0",uri="/camera.shtml"
 nmap -sS -T4 161.81.122.107 -p 8080-8082 --open --script AXISwebcam-enum --script-args uri="/CgiStart/loadingpage=cam.shtml"
@@ -55,7 +55,7 @@ Outputs
 -- @usage
 -- nmap --script-help AXISwebcam-enum.nse
 -- nmap -sS -T4 222.155.98.15 -p 8081 --open --script AXISwebcam-enum
--- nmap -sV -T3 183.95.71.129 -p 8081 --open --script AXISwebcam-enum --script-args logfile="C:\Users\Nmap_scan.txt"
+-- nmap -sS -T3 183.95.71.129 -p 8081 --open --script AXISwebcam-enum --script-args logfile="$pwd\Nmap_scan.txt"
 -- nmap -sS -T4 192.46.209.62 -p 8082 --script AXISwebcam-enum --script-args agent="Mozilla/5.0 (compatible; EvilMonkey)"
 -- nmap -sS -T4 193.93.22.133 -p 8080 --open --script AXISwebcam-enum --script-args agent="Mozilla/5.0",uri="/camera.shtml"
 -- nmap -sS -T4 161.81.122.107 -p 8080-8082 --open --script AXISwebcam-enum --script-args uri="/CgiStart/loadingpage=cam.shtml"
@@ -510,7 +510,7 @@ action = function(host, port)
             print("|")
             print("|  STATUS: AXIS WEBCAM MATCHING URI FOUND")
             print("|    TITLE: webpage doesn't have a <title> tag? [response:nil]")
-            print("|      URI ACCESS: http://"..host.ip..":"..port.number..uri.." ")
+            print("|      URI ACCESS: http://"..host.ip..":"..port.number..uri)
             print("|        Module Author: r00t-3xp10it & Cleiton Pinheiro")
             print("|_\n")
 
@@ -519,6 +519,7 @@ action = function(host, port)
                 local file = io.open(logfile, "a")
                 file:write("|AXISwebcam-enum:\n")
                 file:write("|  Brute force AXIS network camera URL:\n")
+                file:write("|    ["..check_uri.status.."] "..host.ip..":"..port.number.." => "..uri.."\n")
                 file:write("|\n")
                 file:write("|  STATUS: AXIS WEBCAM MATCHING URI FOUND\n")
                 file:write("|    TITLE: webpage doesn't have a <title> tag? [response:nil]\n")
@@ -534,14 +535,20 @@ action = function(host, port)
         -- Loop Through {table} of HTTP TITLE tags
         for i, intable in pairs(tbl) do
             local validar = string.match(title, intable)
-            if ( validar ~= nil or title == intable ) then     --> uri found + version-vendor retrieved from <title>
-                print("|\n|   STATUS: AXIS WEBCAM FOUND\n|     TITLE: "..intable.."\n|       WEBCAM ACCESS: http://"..host.ip..":"..port.number..uri.."\n|         Module Author: r00t-3xp10it & Cleiton Pinheiro\n|_\n")
+            if ( validar ~= nil or title == intable ) then  --> uri found + version-vendor retrieved from <title>
+                print("|")
+                print("|   STATUS: AXIS WEBCAM FOUND")
+                print("|     TITLE: "..intable)
+                print("|       WEBCAM ACCESS: http://"..host.ip..":"..port.number..uri)
+                print("|         Module Author: r00t-3xp10it & Cleiton Pinheiro")
+                print("|_\n")
 
                 -- append data to logfile
                 if ( logfile ~= "false" ) then
                     local file = io.open(logfile, "a")
                     file:write("|AXISwebcam-enum:\n")
                     file:write("|  Brute force AXIS network camera URL:\n")
+                    file:write("|    ["..check_uri.status.."] "..host.ip..":"..port.number.." => "..uri.."\n")
                     file:write("|\n")
                     file:write("|  STATUS: AXIS WEBCAM FOUND\n")
                     file:write("|    TITLE: "..intable.."\n")
@@ -554,13 +561,19 @@ action = function(host, port)
             else
                 titletag = titletag+1
                 if (titletag == 68) then   --> uri found - but failed to match version-vendor from <title>
-                    print("|\n|   STATUS: AXIS WEBCAM MATCHING URI FOUND\n|     TITLE: failed to match version-vendor from <title>\n|       URI ACCESS: http://"..host.ip..":"..port.number..uri.."\n|         Module Author: r00t-3xp10it & Cleiton Pinheiro\n|_\n")
+                    print("|")
+                    print("|   STATUS: AXIS WEBCAM MATCHING URI FOUND")
+                    print("|     TITLE: failed to match version-vendor from <title>")
+                    print("|       URI ACCESS: http://"..host.ip..":"..port.number..uri)
+                    print("|         Module Author: r00t-3xp10it & Cleiton Pinheiro")
+                    print("|_\n")
 
                     -- append data to logfile
                     if ( logfile ~= "false" ) then
                         local file = io.open(logfile, "a")
                         file:write("|AXISwebcam-enum:\n")
                         file:write("|  Brute force AXIS network camera URL:\n")
+                        file:write("|    ["..check_uri.status.."] "..host.ip..":"..port.number.." => "..uri.."\n")
                         file:write("|\n")
                         file:write("|  STATUS: AXIS WEBCAM MATCHING URI FOUND\n")
                         file:write("|    TITLE: failed to match version-vendor from <title>\n")
