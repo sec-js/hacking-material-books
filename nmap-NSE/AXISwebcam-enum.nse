@@ -8,7 +8,7 @@
 --
 -- Version 1.15 update
 -- [1] fix: nse script color scheme (output colorization) throws errors (deleted)
--- [2] fix: use livrary stdnse.sleep(1.5) to invoke sleep() functions insted of invoking io.sleep()
+-- [2] fix: use library stdnse.sleep(1.5) to invoke sleep() functions insted of invoking io.sleep()
 -- [3] @args.logfile = "C:\Users\Nmap_scan.txt" --> create or appends scan data to existing logfile.txt
 -- [4] URI's added: /img/video.asf, /axis-cgi/mjpg/video.cgi, /axis-media/media.amp, /axis-cgi/media.cgi
 --
@@ -22,8 +22,8 @@ description = [[
 Module Author: r00t-3xp10it & Cleiton Pinheiro
 NSE script to detect if target [ip]:[port][/url] its an AXIS Network Camera transmiting (live).
 This script also allow is users to send a fake User-Agent in the tcp packet <agent=User-Agent-String>
-and also allow is users to input a diferent uri= [/url] link to be scan, IF none uri= value its inputed, then
-this script tests a List of AXIS default [/url's] available in our database to brute force the HTML TITLE tag
+also allow is users to input a diferent uri= [/url] link to be scan, IF none uri= value its inputed, then
+this script tests a List of AXIS default [/url's] available in our database to brute force url access link.
 Remark: 'This nse script does not brute force any authentication login of webcams found (only enumeration)'
 
 Syntax examples
@@ -31,7 +31,7 @@ nmap --script-help AXISwebcam-enum.nse
 nmap -sS -T4 222.155.98.15 -p 8081 --open --script AXISwebcam-enum
 nmap -sV -T3 183.95.71.129 -p 8081 --open --script AXISwebcam-enum --script-args logfile="C:\Users\Nmap_scan.txt"
 nmap -sS -T4 192.46.209.62 -p 8082 --script AXISwebcam-enum --script-args agent="Mozilla/5.0 (compatible; EvilMonkey)"
-nmap -sS -T4 193.93.22.133 -p 8080 --open --script AXISwebcam-enum --script-args agent="Mozilla/5.0",uri="/index.shtml"
+nmap -sS -T4 193.93.22.133 -p 8080 --open --script AXISwebcam-enum --script-args agent="Mozilla/5.0",uri="/camera.shtml"
 nmap -sS -T4 161.81.122.107 -p 8080-8082 --open --script AXISwebcam-enum --script-args uri="/CgiStart/loadingpage=cam.shtml"
 nmap -sS -v -T5 -iR 800 -p 8080-8082 --open --script AXISwebcam-enum -D 4.207.247.138,52.123.131.14
 
@@ -56,7 +56,7 @@ Outputs
 -- nmap -sS -T4 222.155.98.15 -p 8081 --open --script AXISwebcam-enum
 -- nmap -sV -T3 183.95.71.129 -p 8081 --open --script AXISwebcam-enum --script-args logfile="C:\Users\Nmap_scan.txt"
 -- nmap -sS -T4 192.46.209.62 -p 8082 --script AXISwebcam-enum --script-args agent="Mozilla/5.0 (compatible; EvilMonkey)"
--- nmap -sS -T4 193.93.22.133 -p 8080 --open --script AXISwebcam-enum --script-args agent="Mozilla/5.0",uri="/index.shtml"
+-- nmap -sS -T4 193.93.22.133 -p 8080 --open --script AXISwebcam-enum --script-args agent="Mozilla/5.0",uri="/camera.shtml"
 -- nmap -sS -T4 161.81.122.107 -p 8080-8082 --open --script AXISwebcam-enum --script-args uri="/CgiStart/loadingpage=cam.shtml"
 -- nmap -sS -v -T5 -iR 800 -p 8080-8082 --open --script AXISwebcam-enum -D 4.207.247.138,52.123.131.14
 -- @output
