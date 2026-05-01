@@ -15,6 +15,7 @@
 -- Version 1.16 update
 -- [1] fix: res.status == nil --> host webserver stop responding to our probes after a while
 -- [2] URI's added: /fullsize.jpg?camera=, /hugesize.jpg?camera=, /videostream.asf?user=
+--                  /mjpg/video.mjpg, /mjpg/1/video.mjpg, /mpeg4/media.amp
 ---
 
 description = [[
@@ -130,7 +131,7 @@ action = function(host, port)
     elseif ( check_uri.status == 404 ) then
         print("|    ["..check_uri.status.."] "..host.ip..":"..port.number.." => "..uri)
         -- Source: https://camera-sdk.com/p_6646-how-to-connect-to-a-axis-camera.html
-        uril = {"/CgiStart?page=", "/axis-cgi/media.cgi", "/axis-media/media.amp", "/axis-cgi/mjpg/video.cgi", "/videostream.asf?user=", "/hugesize.jpg?camera=", "/fullsize.jpg?camera=", "/webcam_code.php", "/view/view.shtml", "/indexFrame.shtml", "/view/index.shtml", "/view/index2.shtml", "/webcam/view.shtml", "/ViewerFrame.shtml", "/RecordFrame?Mode=", "/MultiCameraFrame?Mode=", "/view/viewer_index.shtml", "/visitor_center/i-cam.html", "/index.shtml", "/stadscam/Live95j.asp", "/sub06/cam.php", "/img/video.asf"}
+        uril = {"/CgiStart?page=", "/axis-cgi/media.cgi", "/axis-media/media.amp", "/axis-cgi/mjpg/video.cgi", "/videostream.asf?user=", "/hugesize.jpg?camera=", "/fullsize.jpg?camera=", "/webcam_code.php", "/view/view.shtml", "/indexFrame.shtml", "/view/index.shtml", "/view/index2.shtml", "/webcam/view.shtml", "/ViewerFrame.shtml", "/RecordFrame?Mode=", "/MultiCameraFrame?Mode=", "/view/viewer_index.shtml", "/visitor_center/i-cam.html", "/index.shtml", "/mjpg/video.mjpg", "/mpeg4/media.amp", "/mjpg/1/video.mjpg", "/stadscam/Live95j.asp", "/sub06/cam.php", "/img/video.asf"}
 
         -- loop Through {table} of uri url's
         for i, intable in pairs(uril) do
@@ -167,7 +168,7 @@ action = function(host, port)
                     print("|    ["..res.status.."] "..host.ip..":"..port.number.." => "..intable)
                 end
 
-                if ( limmit == 22 ) then --> why 22? Because its the number of URI links present in the {uril} list.
+                if ( limmit == 25 ) then --> why 25? Because its the number of URI links present in the {uril} list.
                     print("|")
                     print("|  STATUS: NONE AXIS WEBCAM URI FOUND")
                     print("|    REASON: script didnt find any uri matches in our database")
@@ -445,9 +446,16 @@ action = function(host, port)
                "AXIS Video Server",
                "Live View / - AXIS",
                "AXIS 2400 Video Server",
+               "Axis 2420 Video Server",
                "Network Camera TUCCAM1",
+               "AXIS F34 Network Camera",
                "AXIS 243Q(2) Blade 4.45",
+               "Axis 2120 Network Camera",
+               "Axis 2420 Network Camera",
                "Network Camera Capitanía",
+               "AXIS Q7401 Video Encoder",
+               "AXIS M3004 Network Camera",
+               "AXIS P1353 Network Camera",
                "AXIS P5514 Network Camera",
                "AXIS Q1615 Network Camera",
                "AXIS P1357 Network Camera",
@@ -455,60 +463,47 @@ action = function(host, port)
                "AXIS M3026 Network Camera",
                "AXIS M1124 Network Camera",
                "Network Camera Hwy285/cr43",
+               "AXIS M1145-L Network Camera",
+               "AXIS 214 PTZ Network Camera",
                "Login - Residential Gateway",
-               "Axis 2420 Video Server 2.32",
                "AXIS Q6045-E Network Camera",
                "AXIS Q6044-E Network Camera",
+               "Axis 2130 PTZ Network Camera",
                "Network Camera NetworkCamera",
                "AXIS P1435-LE Network Camera",
                "AXIS P1425-LE Network Camera",
-               "Axis 2120 Network Camera 2.34",
-               "Axis 2420 Network Camera 2.30",
-               "Axis 2420 Network Camera 2.31",
-               "Axis 2420 Network Camera 2.32",
+               "AXIS M2025-LE Network Camera",
+               "AXIS Q1765-LE Network Camera",
+               "AXIS V5914 PTZ Network Camera",
+               "AXIS P1354 Fixed Network Camera",
                "AXIS P1365 Mk II Network Camera",
-               "AXIS F34 Network Camera 6.50.2.3",
-               "AXIS 214 PTZ Network Camera 4.49",
-               "Axis 2130 PTZ Network Camera 2.30",
-               "Axis 2130 PTZ Network Camera 2.31",
-               "Axis 2130 PTZ Network Camera 2.32",
                "AXIS P5635-E Mk II Network Camera",
-               "AXIS Q7401 Video Encoder 5.51.5.1",
                "AXIS Q6045-E Mk II Network Camera",
-               "AXIS P1353 Network Camera 6.50.2.3",
-               "AXIS M3004 Network Camera 5.51.5.1",
-               "AXIS M1145-L Network Camera 6.50.3",
-               "AXIS M2025-LE Network Camera 8.50.1",
+               "AXIS P5534 PTZ Dome Network Camera",
                "Live view / - AXIS 205 version 4.03",
                "Live view  - AXIS 240Q Video Server",
+               "AXIS Q6042-E PTZ Dome Network Camera",
                "Live view  - AXIS 221 Network Camera",
                "Live view  - AXIS 211 Network Camera",
-               "AXIS Q1765-LE Network Camera 5.55.2.3",
+               "AXIS Q6034-E PTZ Dome Network Camera",
+               "AXIS P3354 Fixed Dome Network Camera",
+               "AXIS Q3505 Fixed Dome Network Camera",
                "Live view  - AXIS P1354 Network Camera",
                "Live view  - AXIS P1344 Network Camera",
                "Live view  - AXIS M1114 Network Camera",
                "Live view  - AXIS M1103 Network Camera",
                "Live view  - AXIS M1025 Network Camera",
-               "AXIS P1354 Fixed Network Camera 6.50.3",
-               "AXIS P1354 Fixed Network Camera 5.60.1",
-               "AXIS V5914 PTZ Network Camera 5.75.1.11",
                "Live view - AXIS P5534-E Network Camera",
                "Live view  - AXIS 215 PTZ Network Camera",
                "Live view  - AXIS 214 PTZ Network Camera",
                "Live view  - AXIS 213 PTZ Network Camera",
-               "AXIS P5534 PTZ Dome Network Camera 5.51.5",
-               "AXIS Q6034-E PTZ Dome Network Camera 5.41.4",
-               "AXIS P3354 Fixed Dome Network Camera 5.40.17",
-               "AXIS Q6042-E PTZ Dome Network Camera 5.70.1.4",
-               "AXIS Q3505 Fixed Dome Network Camera 6.30.1.1",
-               "Live view - AXIS 206M Network Camera version 4.11",
-               "Live view  - AXIS 211 Network Camera version 4.11",
-               "Live view  - AXIS 211 Network Camera version 4.10",
-               "Live view / - AXIS 205 Network Camera version 4.04",
-               "Live view / - AXIS 205 Network Camera version 4.05",
-               "AXIS P5635-E Mk II PTZ Dome Network Camera 8.40.2.2",
-               "Live view / - AXIS 205 Network Camera version 4.05.1",
-               "Live view - AXIS 213 PTZ Network Camera version 4.12"}
+               "Live view - AXIS 206M Network Camera version",
+               "Live view  - AXIS 211 Network Camera version",
+               "Live view / - AXIS 205 Network Camera version",
+               "Live view / - AXIS 205 Network Camera version",
+               "AXIS P5635-E Mk II PTZ Dome Network Camera",
+               "Live view / - AXIS 205 Network Camera version",
+               "Live view - AXIS 213 PTZ Network Camera version"}
 
         -- nil error handling
         if ( title == nil ) then
@@ -555,7 +550,6 @@ action = function(host, port)
                     file:write("|_\n")
                     file:close()
                 end
-
                 break
             else
                 titletag = titletag+1
@@ -575,7 +569,6 @@ action = function(host, port)
                         file:write("|_\n")
                         file:close()
                     end
-
                     do return end
                 end
             end
