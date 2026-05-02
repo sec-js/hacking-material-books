@@ -106,7 +106,6 @@ If($Mode -imatch '^(update)$')
 }
 
 ## cleanup
-Write-Host "[+] cleanup artifacts left behind by this script" -ForegroundColor Green
 Remove-Item -Path "$Env:TMP\vulners.nse" -Force
 Remove-Item -Path "$Env:TMP\AXISwebcam-enum.nse" -Force
 
