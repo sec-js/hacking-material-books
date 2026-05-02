@@ -14,8 +14,9 @@
 --
 -- Version 1.16 update
 -- [1] fix: res.status == nil --> host webserver stop responding to our probes after a while
--- [2] URI's added: /fullsize.jpg?camera=, /hugesize.jpg?camera=, /videostream.asf?user=
---                  /mjpg/video.mjpg, /mjpg/1/video.mjpg, /mpeg4/media.amp
+-- [2] URI's added: /fullsize.jpg?camera=, /hugesize.jpg?camera=, /axis-cgi/basicdeviceinfo.cgi
+--                  /mjpg/video.mjpg, /mjpg/1/video.mjpg, /mpeg4/media.amp, /videostream.asf?user=
+--                  /cgi-bin/viewer/video.jpg, /videostream.cgi?user=, /control/faststream.jpg?stream=
 ---
 
 description = [[
@@ -139,8 +140,9 @@ action = function(host, port)
 
     elseif ( check_uri.status == 404 ) then  --> uri not found
         print("|    ["..check_uri.status.."] "..host.ip..":"..port.number.." => "..uri)
+        -- Source: https://www.ispyconnect.com/camera/axis
         -- Source: https://camera-sdk.com/p_6646-how-to-connect-to-a-axis-camera.html
-        uril = {"/CgiStart?page=", "/axis-cgi/media.cgi", "/axis-media/media.amp", "/axis-cgi/mjpg/video.cgi", "/videostream.asf?user=", "/hugesize.jpg?camera=", "/fullsize.jpg?camera=", "/webcam_code.php", "/view/view.shtml", "/indexFrame.shtml", "/view/index.shtml", "/view/index2.shtml", "/webcam/view.shtml", "/ViewerFrame.shtml", "/RecordFrame?Mode=", "/MultiCameraFrame?Mode=", "/view/viewer_index.shtml", "/visitor_center/i-cam.html", "/index.shtml", "/mjpg/video.mjpg", "/mpeg4/media.amp", "/mjpg/1/video.mjpg", "/stadscam/Live95j.asp", "/sub06/cam.php", "/img/video.asf"}
+        uril = {"/CgiStart?page=", "/axis-cgi/media.cgi", "/axis-media/media.amp", "/axis-cgi/mjpg/video.cgi", "/axis-cgi/basicdeviceinfo.cgi", "/cgi-bin/viewer/video.jpg", "/videostream.cgi?user=", "/videostream.asf?user=", "/hugesize.jpg?camera=", "/fullsize.jpg?camera=", "/control/faststream.jpg?stream=", "/webcam_code.php", "/view/view.shtml", "/indexFrame.shtml", "/view/index.shtml", "/view/index2.shtml", "/webcam/view.shtml", "/ViewerFrame.shtml", "/RecordFrame?Mode=", "/MultiCameraFrame?Mode=", "/view/viewer_index.shtml", "/visitor_center/i-cam.html", "/index.shtml", "/mjpg/video.mjpg", "/mpeg4/media.amp", "/mjpg/1/video.mjpg", "/stadscam/Live95j.asp", "/sub06/cam.php", "/img/video.asf"}
 
         limmit = 0
         -- loop Through {table} of uri url's
@@ -178,7 +180,7 @@ action = function(host, port)
                     print("|    ["..res.status.."] "..host.ip..":"..port.number.." => "..intable)
                 end
 
-                if ( limmit == 25 ) then --> why 25? Because its the number of URI links present in the {uril} list.
+                if ( limmit == 29 ) then --> why 29? Because its the number of URI links present in the {uril} list.
                     print("|")
                     print("|  STATUS: NONE AXIS WEBCAM URI FOUND")
                     print("|    REASON: script didnt find any uri matches in our database")
