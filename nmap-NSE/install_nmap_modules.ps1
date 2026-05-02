@@ -1,5 +1,5 @@
 <#
-install vulners.nse
+      install vulners.nse + AXISwebcam-enum.nse into nmap database
 #>
 
 [CmdletBinding(PositionalBinding=$false)] param(
