@@ -6,8 +6,8 @@
 
 .NOTES
    Administrator privileges required to install\update modules
-   .\install_nmap_modules.ps1 -mode 'install' --> install the two nse scripts in nmap database
-   .\install_nmap_modules.ps1 -mode 'update'  --> update nmap databse with the two scripts again
+   .\install_nmap_modules.ps1 -mode 'install' --> install the 3 nse scripts in nmap database
+   .\install_nmap_modules.ps1 -mode 'update'  --> update nmap databse with AXISwebcam-enum.nse again
    .\install_nmap_modules.ps1 -nmapinstallpath 'C:\Nmap\Install\directory' --> nmap install location
 #>
 
@@ -143,7 +143,7 @@ If($Mode -imatch '^(update)$')
 
    .NOTES
       Administrator privileges required to update modules
-      .\install_nmap_modules.ps1 -mode 'update'  --> update nmap databse with the two scripts again
+      .\install_nmap_modules.ps1 -mode 'update'  --> update nmap databse with AXISwebcam-enum.nse again
       .\install_nmap_modules.ps1 -nmapinstallpath 'C:\Nmap\Install\directory' --> nmap install location
    #>
 
