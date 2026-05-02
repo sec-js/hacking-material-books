@@ -16,7 +16,7 @@
 )
 
 $ErrorActionPreference = "SilentlyContinue"
-$host.UI.RawUI.WindowTitle = "@install_nmap_modules > [ v1.0.1 ]"
+$host.UI.RawUI.WindowTitle = "@install_nmap_nse_modules"
 
 echo ""
 ## check for admin privileges
@@ -34,6 +34,12 @@ If(-not(Test-Path -Path "$NmapInstallPath"))
    Write-Host "[ABORT]: nmap directory not found in: $NmapInstallPath" -ForegroundColor Red
    Write-Host "Input nmap directory: " -NoNewline
    $NmapInstallPath = Read-Host
+   
+   If(-not(Test-Path -Path "$NmapInstallPath"))
+   {
+      Write-Host "[ABORT]: nmap directory not found in: $NmapInstallPath" -ForegroundColor Red
+      return
+   }
 }
 
 ## Install modules
