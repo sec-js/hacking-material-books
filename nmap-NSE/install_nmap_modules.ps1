@@ -54,7 +54,7 @@ If($Mode -imatch '^(install)$')
    Start-Sleep -Seconds 1
 
    ## install Vulners.nse
-   if (Test-path -path "$NmapInstallPath\scripts\vulners.nse" -PathType Leaf)
+   If(Test-path -path "$NmapInstallPath\scripts\vulners.nse" -PathType Leaf)
    {
       write-host "[ABORT]: " -NoNewline
       write-host "$NmapInstallPath\scripts\vulners.nse" -ForegroundColor Red -NoNewline
@@ -67,7 +67,7 @@ If($Mode -imatch '^(install)$')
       Write-Host "[*] move vulners.nse to $NmapInstallPath\scripts\vulners.nse"
       Move-Item -Path "$Env:TMP\vulners.nse" -Destination "$NmapInstallPath\scripts\vulners.nse" -Force
 
-      if (Test-path -path "$NmapInstallPath\scripts\vulners.nse" -PathType Leaf)
+      If(Test-path -path "$NmapInstallPath\scripts\vulners.nse" -PathType Leaf)
       {
          Write-Host "[*] moved vulners.nse to nmap scripts directory"
          Write-Host "[+] updating nmap nse database with vulners.nse"
@@ -84,11 +84,10 @@ If($Mode -imatch '^(install)$')
       {
          nmap --script-help vulners.nse
       }
-
    }
 
    ## install AXISwebcam-enum.nse
-   if (Test-path -path "$NmapInstallPath\scripts\AXISwebcam-enum.nse" -PathType Leaf)
+   If(Test-path -path "$NmapInstallPath\scripts\AXISwebcam-enum.nse" -PathType Leaf)
    {
       write-host "[ABORT]: " -NoNewline
       write-host "$NmapInstallPath\scripts\AXISwebcam-enum.nse" -ForegroundColor Red -NoNewline
@@ -101,7 +100,7 @@ If($Mode -imatch '^(install)$')
       Write-Host "[*] move AXISwebcam-enum.nse to $NmapInstallPath\scripts\AXISwebcam-enum.nse"
       Move-Item -Path "$Env:TMP\AXISwebcam-enum.nse" -Destination "$NmapInstallPath\scripts\AXISwebcam-enum.nse" -Force
 
-      if (Test-path -path "$NmapInstallPath\scripts\AXISwebcam-enum.nse" -PathType Leaf)
+      If(Test-path -path "$NmapInstallPath\scripts\AXISwebcam-enum.nse" -PathType Leaf)
       {
          Write-Host "[*] moved AXISwebcam-enum.nse to nmap scripts directory"
          Write-Host "[+] updating nmap nse database with AXISwebcam-enum.nse"
@@ -121,7 +120,7 @@ If($Mode -imatch '^(install)$')
    }
 
    ## install smtp-vuln-cve2020-28017-through-28026-21nails.nse
-   if (Test-path -path "$NmapInstallPath\scripts\smtp-vuln-cve2020-28017-through-28026-21nails.nse" -PathType Leaf)
+   If(Test-path -path "$NmapInstallPath\scripts\smtp-vuln-cve2020-28017-through-28026-21nails.nse" -PathType Leaf)
    {
       write-host "[ABORT]: " -NoNewline
       write-host "$NmapInstallPath\scripts\smtp-vuln-cve2020-28017-through-28026-21nails.nse" -ForegroundColor Red -NoNewline
@@ -134,7 +133,7 @@ If($Mode -imatch '^(install)$')
       Write-Host "[*] move smtp-vuln-cve2020-28017-through-28026-21nails.nse to $NmapInstallPath\scripts\smtp-vuln-cve2020-28017-through-28026-21nails.nse"
       Move-Item -Path "$Env:TMP\smtp-vuln-cve2020-28017-through-28026-21nails.nse" -Destination "$NmapInstallPath\scripts\smtp-vuln-cve2020-28017-through-28026-21nails.nse" -Force
 
-      if (Test-path -path "$NmapInstallPath\scripts\smtp-vuln-cve2020-28017-through-28026-21nails.nse" -PathType Leaf)
+      If(Test-path -path "$NmapInstallPath\scripts\smtp-vuln-cve2020-28017-through-28026-21nails.nse" -PathType Leaf)
       {
          Write-Host "[*] moved smtp-vuln-cve2020-28017-through-28026-21nails.nse to nmap scripts directory"
          Write-Host "[+] updating nmap nse database with smtp-vuln-cve2020-28017-through-28026-21nails.nse"
@@ -154,7 +153,7 @@ If($Mode -imatch '^(install)$')
    }
 
    ## install dlink-cve-2019-13101.nse
-   if (Test-path -path "$NmapInstallPath\scripts\dlink-cve-2019-13101.nse" -PathType Leaf)
+   If(Test-path -path "$NmapInstallPath\scripts\dlink-cve-2019-13101.nse" -PathType Leaf)
    {
       write-host "[ABORT]: " -NoNewline
       write-host "$NmapInstallPath\scripts\dlink-cve-2019-13101.nse" -ForegroundColor Red -NoNewline
@@ -167,7 +166,7 @@ If($Mode -imatch '^(install)$')
       Write-Host "[*] move dlink-cve-2019-13101.nse to $NmapInstallPath\scripts\dlink-cve-2019-13101.nse"
       Move-Item -Path "$Env:TMP\dlink-cve-2019-13101.nse" -Destination "$NmapInstallPath\scripts\dlink-cve-2019-13101.nse" -Force
 
-      if (Test-path -path "$NmapInstallPath\scripts\dlink-cve-2019-13101.nse" -PathType Leaf)
+      If(Test-path -path "$NmapInstallPath\scripts\dlink-cve-2019-13101.nse" -PathType Leaf)
       {
          Write-Host "[*] moved dlink-cve-2019-13101.nse to nmap scripts directory"
          Write-Host "[+] updating nmap nse database with dlink-cve-2019-13101.nse"
@@ -213,7 +212,7 @@ If($Mode -imatch '^(update)$')
    Write-Host "[*] move AXISwebcam-enum.nse to $NmapInstallPath\scripts\AXISwebcam-enum.nse"
    Move-Item -Path "$Env:TMP\AXISwebcam-enum.nse" -Destination "$NmapInstallPath\scripts\AXISwebcam-enum.nse" -Force
 
-   if (Test-path -path "$NmapInstallPath\scripts\AXISwebcam-enum.nse" -PathType Leaf)
+   If(Test-path -path "$NmapInstallPath\scripts\AXISwebcam-enum.nse" -PathType Leaf)
    {
       Write-Host "[*] moved AXISwebcam-enum.nse to nmap scripts directory"
       Write-Host "[+] updating nmap nse database with AXISwebcam-enum.nse"
