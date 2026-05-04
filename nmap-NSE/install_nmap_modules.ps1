@@ -79,16 +79,16 @@ If($Mode -imatch '^(install)$')
             Write-Host "[+] updating nmap nse database with vulners.nse"
             nmap.exe --script-updatedb
             Write-Host ""
+
+            ## Display modules description
+            If ($Description.IsPresent)
+            {
+               nmap --script-help vulners.nse
+            }
          }
          Else
          {
             Write-Host "[-] ERROR: moving vulners.nse to nmap scripts directory" -ForegroundColor Red
-         }
-
-         ## Display modules description
-         If ($Description.IsPresent)
-         {
-            nmap --script-help vulners.nse
          }
       }
    }
@@ -119,16 +119,16 @@ If($Mode -imatch '^(install)$')
             Write-Host "[+] updating nmap nse database with AXISwebcam-enum.nse"
             nmap.exe --script-updatedb
             Write-Host ""
+
+            ## Display modules description
+            If ($Description.IsPresent)
+            {
+               nmap --script-help AXISwebcam-enum.nse
+            }
          }
          Else
          {
             Write-Host "[-] ERROR: moving AXISwebcam-enum.nse to nmap scripts directory" -ForegroundColor Red
-         }
-
-         ## Display modules description
-         If ($Description.IsPresent)
-         {
-            nmap --script-help AXISwebcam-enum.nse
          }
       }
    }
@@ -159,16 +159,16 @@ If($Mode -imatch '^(install)$')
             Write-Host "[+] updating nmap nse database with dlink-cve-2019-13101.nse"
             nmap.exe --script-updatedb
             Write-Host ""
+
+            ## Display modules description
+            If ($Description.IsPresent)
+            {
+               nmap --script-help dlink-cve-2019-13101.nse
+            }
          }
          Else
          {
             Write-Host "[-] ERROR: moving dlink-cve-2019-13101.nse to nmap scripts directory" -ForegroundColor Red
-         }
-
-         ## Display modules description
-         If ($Description.IsPresent)
-         {
-            nmap --script-help dlink-cve-2019-13101.nse
          }
       }
    }
@@ -199,16 +199,16 @@ If($Mode -imatch '^(install)$')
             Write-Host "[+] updating nmap nse database with smtp-vuln-cve2020-28017-through-28026-21nails.nse"
             nmap.exe --script-updatedb
             Write-Host ""
+
+            ## Display modules description
+            If ($Description.IsPresent)
+            {
+               nmap --script-help smtp-vuln-cve2020-28017-through-28026-21nails.nse
+            }
          }
          Else
          {
             Write-Host "[-] ERROR: moving smtp-vuln-cve2020-28017-through-28026-21nails.nse to nmap scripts directory" -ForegroundColor Red
-         }
-
-         ## Display modules description
-         If ($Description.IsPresent)
-         {
-            nmap --script-help smtp-vuln-cve2020-28017-through-28026-21nails.nse
          }
       }
    }
